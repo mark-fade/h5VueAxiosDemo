@@ -6,11 +6,33 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
+    env: require('./dev.env'),
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/iclient': {
+        target: 'https://api.iclient.ifeng.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/iclient': ''
+        }
+      },
+      '/ifeng3g': {
+        target: 'https://api.3g.ifeng.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ifeng3g': ''
+        }
+      },
+      '/comment': {
+        target: 'http://comment.ifeng.com/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/comment': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -44,6 +66,7 @@ module.exports = {
   },
 
   build: {
+    env: require('./prod.env'),
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
@@ -51,7 +74,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-
+    
     /**
      * Source Maps
      */
