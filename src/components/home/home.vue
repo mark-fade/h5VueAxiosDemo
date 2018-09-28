@@ -1,14 +1,19 @@
 <!--  -->
 <template>
-  <div>
-      
+  <div class="home">
 
-      <!-- 新闻列表 -->
-      <section class="project-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
-        <newslist
-          :newslist = "news.item"
-         >
-        </newslist>
+    <swiper :options="swiperOption" class="swiper-wrap" v-if="swiper.length">
+      <swiper-slide v-for="(item,index) in swiper" :key="index" v-if="item.type!='web'">
+        <span class="title">{{item.title}}</span>
+        <img :src="item.thumbnail" alt="" @click="toCarousel(item.id)"/>
+      </swiper-slide>
+        <div class="swiper-pagination" slot="pagination" v-if="swiper.length>1"></div>
+    </swiper>
+
+    <!-- 新闻列表 -->
+    <section class="project-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
+      <newslist :newslist="news.item">
+      </newslist>
     </section>
 
   </div>
@@ -17,6 +22,7 @@
 <script>
 import { getnews } from "@/http/getData";
 import newslist from "@/components/commen/newslist";
+import { swiper, swiperSlide } from "vue-awesome-swiper";
 
 export default {
   data() {
@@ -63,12 +69,34 @@ export default {
           }
         }
       });
-    }
+    },
+    toCarousel(params) {}
   },
   components: {
+    swiper,
+    swiperSlide,
     newslist
   }
 };
 </script>
 <style lang='scss' scoped>
+.home {
+  width: 100%;
+}
+.swiper-wrap {
+  height: 360px;
+  width: 100%;
+  position: relative;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+  .title {
+    position: absolute;
+    bottom: 0;
+    left: 0.266667rem;
+    font-size: 16px; /*px*/
+    color: #fff;
+  }
+}
 </style>
