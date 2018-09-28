@@ -1,16 +1,13 @@
 <!--  -->
 <template>
   <div>
-      <h1>home--ceshi</h1>
+      
 
       <!-- 新闻列表 -->
       <section class="project-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="20">
         <newslist
           :newslist = "news.item"
-          @toCarousel = "toCarousel"
-          @toArticle = "toArticle"
-          @toVideo = "toVideo"
-          @toTopic = "toTopic">
+         >
         </newslist>
     </section>
 
@@ -19,7 +16,7 @@
 
 <script>
 import { getnews } from "@/http/getData";
-import newslist from '@/components/commen/newslist'
+import newslist from "@/components/commen/newslist";
 
 export default {
   data() {
@@ -67,6 +64,9 @@ export default {
         }
       });
     }
+  },
+  components: {
+    newslist
   }
 };
 </script>
